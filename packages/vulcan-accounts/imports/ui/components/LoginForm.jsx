@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Tracker from 'tracker-component';
 import { Accounts } from 'meteor/accounts-base';
-import { KEY_PREFIX } from '../../login_session.js';
+import {  KEY_PREFIX } from '../../login_session.js';
 import { Components, registerComponent, withCurrentUser, Callbacks, runCallbacks } from 'meteor/vulcan:core';
 import { intlShape } from 'meteor/vulcan:i18n';
 import { withApollo } from 'react-apollo';
@@ -41,7 +41,7 @@ export class AccountsLoginForm extends Tracker.Component {
       return () => {
         props.client.resetStore();
 
-        if(Callbacks['users.postlogin']) { // execute any post-sign-in callbacks
+        if (Callbacks['users.postlogin']) { // execute any post-sign-in callbacks
           runCallbacks('users.postlogin');
         } else { // or else execute the hook
           hook();
@@ -52,7 +52,7 @@ export class AccountsLoginForm extends Tracker.Component {
     // Set inital state.
     this.state = {
       messages: [],
-      waiting: true,
+      waiting: false,
       formState: props.formState ? props.formState : (currentUser ? STATES.PROFILE : STATES.SIGN_IN),
       onSubmitHook: props.onSubmitHook || Accounts.ui._options.onSubmitHook,
       onSignedInHook: resetStoreAndThen(postLogInAndThen(props.onSignedInHook || Accounts.ui._options.onSignedInHook)),
@@ -145,7 +145,7 @@ export class AccountsLoginForm extends Tracker.Component {
 
   validateField(field, value) {
     const { formState } = this.state;
-    switch(field) {
+    switch (field) {
       case 'email':
         return validateEmail(value,
           this.showMessage.bind(this),
@@ -168,8 +168,8 @@ export class AccountsLoginForm extends Tracker.Component {
   getUsernameOrEmailField() {
     return {
       id: 'usernameOrEmail',
-      hint: this.context.intl.formatMessage({id: 'accounts.enter_username_or_email'}),
-      label: this.context.intl.formatMessage({id: 'accounts.username_or_email'}),
+      hint: this.context.intl.formatMessage({ id: 'accounts.enter_username_or_email' }),
+      label: this.context.intl.formatMessage({ id: 'accounts.username_or_email' }),
       required: true,
       defaultValue: this.state.currentUsername || "",
       onChange: this.handleChange.bind(this, 'usernameOrEmail'),
@@ -180,8 +180,8 @@ export class AccountsLoginForm extends Tracker.Component {
   getUsernameField() {
     return {
       id: 'username',
-      hint: this.context.intl.formatMessage({id: 'accounts.enter_username'}),
-      label: this.context.intl.formatMessage({id: 'accounts.username'}),
+      hint: this.context.intl.formatMessage({ id: 'accounts.enter_username' }),
+      label: this.context.intl.formatMessage({ id: 'accounts.username' }),
       required: true,
       defaultValue: this.state.currentUsername || "",
       onChange: this.handleChange.bind(this, 'username'),
@@ -192,8 +192,8 @@ export class AccountsLoginForm extends Tracker.Component {
   getEmailField() {
     return {
       id: 'email',
-      hint: this.context.intl.formatMessage({id: 'accounts.enter_email'}),
-      label: this.context.intl.formatMessage({id: 'accounts.email'}),
+      hint: this.context.intl.formatMessage({ id: 'accounts.enter_email' }),
+      label: this.context.intl.formatMessage({ id: 'accounts.email' }),
       type: 'email',
       required: true,
       defaultValue: this.state.email || "",
@@ -205,8 +205,8 @@ export class AccountsLoginForm extends Tracker.Component {
   getPasswordField() {
     return {
       id: 'password',
-      hint: this.context.intl.formatMessage({id: 'accounts.enter_password'}),
-      label: this.context.intl.formatMessage({id: 'accounts.password'}),
+      hint: this.context.intl.formatMessage({ id: 'accounts.enter_password' }),
+      label: this.context.intl.formatMessage({ id: 'accounts.password' }),
       type: 'password',
       required: true,
       defaultValue: this.state.password || "",
@@ -218,8 +218,8 @@ export class AccountsLoginForm extends Tracker.Component {
   getSetPasswordField() {
     return {
       id: 'newPassword',
-      hint: this.context.intl.formatMessage({id: 'accounts.enter_password'}),
-      label: this.context.intl.formatMessage({id: 'accounts.choose_password'}),
+      hint: this.context.intl.formatMessage({ id: 'accounts.enter_password' }),
+      label: this.context.intl.formatMessage({ id: 'accounts.choose_password' }),
       type: 'password',
       required: true,
       onChange: this.handleChange.bind(this, 'newPassword')
@@ -229,8 +229,8 @@ export class AccountsLoginForm extends Tracker.Component {
   getNewPasswordField() {
     return {
       id: 'newPassword',
-      hint: this.context.intl.formatMessage({id: 'accounts.enter_new_password'}),
-      label: this.context.intl.formatMessage({id: 'accounts.new_password'}),
+      hint: this.context.intl.formatMessage({ id: 'accounts.enter_new_password' }),
+      label: this.context.intl.formatMessage({ id: 'accounts.new_password' }),
       type: 'password',
       required: true,
       onChange: this.handleChange.bind(this, 'newPassword'),
@@ -247,7 +247,7 @@ export class AccountsLoginForm extends Tracker.Component {
         break;
     }
     this.setState({ [field]: value });
-    this.setDefaultFieldValues({ [field]: value });
+    this.setDefaultFieldValues({  [field]: value });
   }
 
   fields() {
@@ -299,7 +299,7 @@ export class AccountsLoginForm extends Tracker.Component {
       }
 
       if (_.contains(["USERNAME_AND_OPTIONAL_EMAIL"], passwordSignupFields())) {
-        loginFields.push(Object.assign(this.getEmailField(), {required: false}));
+        loginFields.push(Object.assign(this.getEmailField(), { required: false }));
       }
 
       loginFields.push(this.getPasswordField());
@@ -339,7 +339,7 @@ export class AccountsLoginForm extends Tracker.Component {
     if (currentUser && formState == STATES.PROFILE) {
       loginButtons.push({
         id: 'signOut',
-        label: this.context.intl.formatMessage({id: 'accounts.sign_out'}),
+        label: this.context.intl.formatMessage({ id: 'accounts.sign_out' }),
         disabled: waiting,
         onClick: this.signOut.bind(this)
       });
@@ -348,7 +348,7 @@ export class AccountsLoginForm extends Tracker.Component {
     if (this.showCreateAccountLink() && this.props.showSignUpLink) {
       loginButtons.push({
         id: 'switchToSignUp',
-        label: this.context.intl.formatMessage({id: 'accounts.sign_up'}),
+        label: this.context.intl.formatMessage({ id: 'accounts.sign_up' }),
         type: 'link',
         href: signUpPath,
         onClick: this.switchToSignUp.bind(this)
@@ -358,7 +358,7 @@ export class AccountsLoginForm extends Tracker.Component {
     if ((formState == STATES.SIGN_UP || formState == STATES.PASSWORD_RESET) && this.props.showSignInLink) {
       loginButtons.push({
         id: 'switchToSignIn',
-        label: this.context.intl.formatMessage({id: 'accounts.sign_in'}),
+        label: this.context.intl.formatMessage({ id: 'accounts.sign_in' }),
         type: 'link',
         href: loginPath,
         onClick: this.switchToSignIn.bind(this)
@@ -368,7 +368,7 @@ export class AccountsLoginForm extends Tracker.Component {
     if (this.showForgotPasswordLink()) {
       loginButtons.push({
         id: 'switchToPasswordReset',
-        label: this.context.intl.formatMessage({id: 'accounts.forgot_password'}),
+        label: this.context.intl.formatMessage({ id: 'accounts.forgot_password' }),
         type: 'link',
         href: resetPasswordPath,
         onClick: this.switchToPasswordReset.bind(this)
@@ -379,10 +379,10 @@ export class AccountsLoginForm extends Tracker.Component {
       && formState == STATES.PROFILE
       // note: user.services is not published so change password link would never be shown
       // && (currentUser.services && 'password' in currentUser.services)
-      ) {
+    ) {
       loginButtons.push({
         id: 'switchToChangePassword',
-        label: this.context.intl.formatMessage({id: 'accounts.change_password'}),
+        label: this.context.intl.formatMessage({ id: 'accounts.change_password' }),
         type: 'link',
         href: changePasswordPath,
         onClick: this.switchToChangePassword.bind(this)
@@ -392,7 +392,7 @@ export class AccountsLoginForm extends Tracker.Component {
     if (formState == STATES.SIGN_UP) {
       loginButtons.push({
         id: 'signUp',
-        label: this.context.intl.formatMessage({id: 'accounts.sign_up'}),
+        label: this.context.intl.formatMessage({ id: 'accounts.sign_up' }),
         type: hasPasswordService() ? 'submit' : 'link',
         className: 'active',
         disabled: waiting,
@@ -403,7 +403,7 @@ export class AccountsLoginForm extends Tracker.Component {
     if (this.showSignInLink()) {
       loginButtons.push({
         id: 'signIn',
-        label: this.context.intl.formatMessage({id: 'accounts.sign_in'}),
+        label: this.context.intl.formatMessage({ id: 'accounts.sign_in' }),
         type: hasPasswordService() ? 'submit' : 'link',
         className: 'active',
         disabled: waiting,
@@ -414,7 +414,7 @@ export class AccountsLoginForm extends Tracker.Component {
     if (formState == STATES.PASSWORD_RESET) {
       loginButtons.push({
         id: 'emailResetLink',
-        label: this.context.intl.formatMessage({id: 'accounts.reset_your_password'}),
+        label: this.context.intl.formatMessage({ id: 'accounts.reset_your_password' }),
         type: 'submit',
         disabled: waiting,
         onClick: this.passwordReset.bind(this)
@@ -424,7 +424,7 @@ export class AccountsLoginForm extends Tracker.Component {
     if (this.showPasswordChangeForm() || this.showEnrollAccountForm()) {
       loginButtons.push({
         id: 'changePassword',
-        label: (this.showPasswordChangeForm() ? this.context.intl.formatMessage({id: 'accounts.change_password'}) : this.context.intl.formatMessage({id: 'accounts.set_password'})),
+        label: (this.showPasswordChangeForm() ? this.context.intl.formatMessage({ id: 'accounts.change_password' }) : this.context.intl.formatMessage({ id: 'accounts.set_password' })),
         type: 'submit',
         disabled: waiting,
         onClick: this.passwordChange.bind(this)
@@ -433,7 +433,7 @@ export class AccountsLoginForm extends Tracker.Component {
       if (Accounts.user()) {
         loginButtons.push({
           id: 'switchToSignOut',
-          label: this.context.intl.formatMessage({id: 'accounts.cancel'}),
+          label: this.context.intl.formatMessage({ id: 'accounts.cancel' }),
           type: 'link',
           href: profilePath,
           onClick: this.switchToSignOut.bind(this)
@@ -441,7 +441,7 @@ export class AccountsLoginForm extends Tracker.Component {
       } else {
         loginButtons.push({
           id: 'cancelResetPassword',
-          label: this.context.intl.formatMessage({id: 'accounts.cancel'}),
+          label: this.context.intl.formatMessage({ id: 'accounts.cancel' }),
           type: 'link',
           onClick: this.cancelResetPassword.bind(this),
         });
@@ -461,17 +461,17 @@ export class AccountsLoginForm extends Tracker.Component {
     return _.indexBy(loginButtons, 'id');
   }
 
-  showSignInLink(){
+  showSignInLink() {
     return this.state.formState == STATES.SIGN_IN && Package['accounts-password'];
   }
 
   showPasswordChangeForm() {
-    return(Package['accounts-password']
+    return (Package['accounts-password']
       && this.state.formState == STATES.PASSWORD_CHANGE);
   }
 
   showEnrollAccountForm() {
-    return(Package['accounts-password']
+    return (Package['accounts-password']
       && this.state.formState == STATES.ENROLL_ACCOUNT);
   }
 
@@ -596,7 +596,7 @@ export class AccountsLoginForm extends Tracker.Component {
       password,
       formState,
       onSubmitHook
-    } = this.state;
+    }  = this.state;
     let error = false;
     let loginSelector;
     this.clearMessages();
@@ -636,11 +636,11 @@ export class AccountsLoginForm extends Tracker.Component {
 
     if (!error) {
       Meteor.loginWithPassword(loginSelector, password, (error, result) => {
-        onSubmitHook(error,formState);
+        onSubmitHook(error, formState);
         if (error) {
           console.log(error);
           const errorId = `accounts.error_${error.reason.toLowerCase().replace(/ /g, '_')}`;
-          if (this.context.intl.formatMessage({id: errorId})) {
+          if (this.context.intl.formatMessage({ id: errorId })) {
             this.showMessage(errorId);
           } else {
             this.showMessage('accounts.error_unknown');
@@ -661,8 +661,8 @@ export class AccountsLoginForm extends Tracker.Component {
   oauthButtons() {
     const { formState, waiting } = this.state;
     let oauthButtons = [];
-    if (formState == STATES.SIGN_IN || formState == STATES.SIGN_UP ) {
-      if(Accounts.oauth) {
+    if (formState == STATES.SIGN_IN || formState == STATES.SIGN_UP) {
+      if (Accounts.oauth) {
         Accounts.oauth.serviceNames().map((service) => {
           oauthButtons.push({
             id: service,
@@ -685,7 +685,7 @@ export class AccountsLoginForm extends Tracker.Component {
       return serviceName.charAt(0).toUpperCase() + serviceName.slice(1);
     }
 
-    if(serviceName === 'meteor-developer'){
+    if (serviceName === 'meteor-developer') {
       serviceName = 'meteorDeveloperAccount';
     }
 
@@ -701,14 +701,14 @@ export class AccountsLoginForm extends Tracker.Component {
 
     this.clearMessages();
     loginWithService(options, (error) => {
-      onSubmitHook(error,formState);
+      onSubmitHook(error, formState);
       if (error) {
         console.log(error)
         if (error instanceof Accounts.LoginCancelledError) {
           // do nothing
         } else {
           const errorId = `accounts.error_${error.reason.toLowerCase().replace(/ /g, '_')}`;
-          if (this.context.intl.formatMessage({id: errorId})) {
+          if (this.context.intl.formatMessage({ id: errorId })) {
             this.showMessage(errorId);
           } else {
             this.showMessage('accounts.error_unknown');
@@ -733,12 +733,12 @@ export class AccountsLoginForm extends Tracker.Component {
       password,
       formState,
       onSubmitHook
-    } = this.state;
+    }  = this.state;
     let error = false;
     this.clearMessages();
 
     if (username !== null) {
-      if ( !this.validateField('username', username) ) {
+      if (!this.validateField('username', username)) {
         if (this.state.formState == STATES.SIGN_UP) {
           this.state.onSubmitHook("error.accounts.usernameRequired", this.state.formState);
         }
@@ -749,7 +749,7 @@ export class AccountsLoginForm extends Tracker.Component {
     } else {
       if (_.contains([
         "USERNAME_AND_EMAIL",
-      ], passwordSignupFields()) && !this.validateField('username', username) ) {
+      ], passwordSignupFields()) && !this.validateField('username', username)) {
         if (this.state.formState == STATES.SIGN_UP) {
           this.state.onSubmitHook("error.accounts.usernameRequired", this.state.formState);
         }
@@ -757,7 +757,7 @@ export class AccountsLoginForm extends Tracker.Component {
       }
     }
 
-    if (!this.validateField('email', email)){
+    if (!this.validateField('email', email)) {
       error = true;
     } else {
       options.email = email;
@@ -770,20 +770,20 @@ export class AccountsLoginForm extends Tracker.Component {
       options.password = password;
     }
 
-    const SignUp = function(_options) {
+    const SignUp = function (_options) {
       Accounts.createUser(_options, (error) => {
         if (error) {
           console.log(error);
 
-          const errorId = `accounts.error_${error.reason.toLowerCase().replace(/ /g, '_').replace('.','')}`;
+          const errorId = `accounts.error_${error.reason.toLowerCase().replace(/ /g, '_').replace('.', '')}`;
 
-          if (this.context.intl.formatMessage({id: errorId})){
+          if (this.context.intl.formatMessage({ id: errorId })) {
             this.showMessage(errorId, 'error');
           } else {
             this.showMessage('accounts.error_unknown', 'error');
           }
 
-          if (this.context.intl.formatMessage({id: `error.accounts_${error.reason}`})) {
+          if (this.context.intl.formatMessage({ id: `error.accounts_${error.reason}` })) {
             onSubmitHook(`error.accounts.${error.reason}`, formState);
           }
           else {
@@ -820,7 +820,7 @@ export class AccountsLoginForm extends Tracker.Component {
       waiting,
       formState,
       onSubmitHook
-    } = this.state;
+    }  = this.state;
 
     if (waiting) {
       return;
@@ -854,10 +854,10 @@ export class AccountsLoginForm extends Tracker.Component {
       formState,
       onSubmitHook,
       onSignedInHook,
-    } = this.state;
+    }  = this.state;
 
-    if (!this.validateField('password', newPassword)){
-      onSubmitHook('err.minChar',formState);
+    if (!this.validateField('password', newPassword)) {
+      onSubmitHook('err.minChar', formState);
       return;
     }
 
@@ -899,15 +899,15 @@ export class AccountsLoginForm extends Tracker.Component {
     }
   }
 
-  showMessage(messageId, type, clearTimeout, field){
+  showMessage(messageId, type, clearTimeout, field) {
     if (messageId) {
-      this.setState(({ messages = [] }) => {
+      this.setState(({  messages = [] }) => {
         messages.push({
-          message: this.context.intl.formatMessage({id: messageId}),
+          message: this.context.intl.formatMessage({ id: messageId }),
           type,
-          ...(field && { field }),
+          ...(field && {  field  }),
         });
-        return  { messages };
+        return {  messages };
       });
       if (clearTimeout) {
         this.hideMessageTimout = setTimeout(() => {
@@ -919,14 +919,14 @@ export class AccountsLoginForm extends Tracker.Component {
   }
 
   getMessageForField(field) {
-    const { messages = [] } = this.state;
-    return messages.find(({ field:key }) => key === field);
+    const {  messages = [] } = this.state;
+    return messages.find(({  field: key }) => key === field);
   }
 
   clearMessage(message) {
     if (message) {
-      this.setState(({ messages = [] }) => ({
-        messages: messages.filter(({ message:a }) => a !== message),
+      this.setState(({  messages = []  }) => ({
+        messages: messages.filter(({  message: a }) => a !== message),
       }));
     }
   }
@@ -947,16 +947,16 @@ export class AccountsLoginForm extends Tracker.Component {
   render() {
     this.oauthButtons();
     // Backwords compatibility with v1.2.x.
-    const { messages = [] } = this.state;
+    const {  messages = [] }  = this.state;
     const message = {
       deprecated: true,
-      message: messages.map(({ message }) => message).join(', '),
+      message: messages.map(({  message }) => message).join(', '),
     };
 
     return (
       <Components.AccountsForm
         oauthServices={this.oauthButtons()}
-        fields={this.fields()} 
+        fields={this.fields()}
         buttons={this.buttons()}
         {...this.state}
         message={message}
